@@ -1,23 +1,22 @@
 use std::fmt::{Display, Formatter, Result};
 
-// TODO: Refactor to package
 #[derive(Debug)]
-pub struct MinMax(i64, i64);
+struct MinMax(i64, i64);
 
 impl Display for MinMax {
-    fn fmt(&self, f: &mut Formatter) -> Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "({}, {})", self.0, self.1)
     }
 }
 
 #[derive(Debug)]
-pub struct Complex {
+struct Complex {
     real: f64,
     imag: f64
 }
 
 impl Display for Complex {
-    fn fmt(&self, f: &mut Formatter) -> Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(f, "{} + {}i", self.real, self.imag)
     }
 }
@@ -25,7 +24,7 @@ impl Display for Complex {
 struct List(Vec<i32>);
 
 impl Display for List {
-    fn fmt(&self, f: &mut Formatter) -> Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         let vec = &self.0;
 
         write!(f, "[")?;
