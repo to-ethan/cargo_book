@@ -40,6 +40,20 @@ impl Display for List {
     }
 }
 
+#[derive(Debug)]
+struct Color {
+    red: u8,
+    green: u8,
+    blue: u8,
+}
+
+impl Display for Color {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        let rgb_tuple = format!("({}, {}, {})", self.red, self.green, self.blue);
+        let hex_code = format!("0x{:X}{:X}{:X}", self.red, self.green, self.blue);
+        write!(f, "RGB {rgb} {hex}", rgb= rgb_tuple, hex= hex_code)
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -49,7 +63,6 @@ mod tests {
     fn minmax_display() {
         let minmax = MinMax(0, 50);
         let expected = format!("({}, {})", minmax.0, minmax.1);
-
         assert_eq!(format!("{}", minmax), expected);
     }
 
@@ -57,7 +70,6 @@ mod tests {
     fn minmax_debug() {
         let minmax = MinMax(0, 50);
         let expected = format!("MinMax({}, {})", minmax.0, minmax.1);
-
         assert_eq!(format!("{:?}", minmax), expected);
     }
 
@@ -65,7 +77,6 @@ mod tests {
     fn complex_display() {
         let complex = Complex { real: 5.5, imag: -22.2 };
         let expected = format!("{} + {}i", complex.real, complex.imag);
-
         assert_eq!(format!("{}", complex), expected);
     }
 
@@ -73,7 +84,6 @@ mod tests {
     fn complex_debug() {
         let complex = Complex { real: 5.5, imag: -22.2 };
         let expected = format!("Complex {{ real: {}, imag: {} }}", complex.real, complex.imag);
-
         assert_eq!(format!("{:?}", complex), expected);
     }
 
@@ -81,7 +91,13 @@ mod tests {
     fn int_list_display() {
         let v = List(vec![1, 2, 3, 4, 5]);
         let expected = "[1, 2, 3, 4, 5]";
+        assert_eq!(format!("{}", v), expected);
+    }
 
-        assert_eq!(format!("{}", v), expected)
+    #[test]
+    fn color_display() {
+        let c = Color { red: 128, green: 255, blue: 90 };
+        let expected = "RGB (128, 255, 90) 0x80FF5A";
+        assert_eq!(format!("{}", c), expected);
     }
 }
