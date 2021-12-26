@@ -61,30 +61,30 @@ mod tests {
 
     #[test]
     fn minmax_display() {
-        let minmax = MinMax(0, 50);
-        let expected = format!("({}, {})", minmax.0, minmax.1);
-        assert_eq!(format!("{}", minmax), expected);
+        let m = MinMax(0, 50);
+        let expected = "(0, 50)";
+        assert_eq!(format!("{}", m), expected);
     }
 
     #[test]
     fn minmax_debug() {
-        let minmax = MinMax(0, 50);
-        let expected = format!("MinMax({}, {})", minmax.0, minmax.1);
-        assert_eq!(format!("{:?}", minmax), expected);
+        let m = MinMax(0, 50);
+        let expected = "MinMax(0, 50)";
+        assert_eq!(format!("{:?}", m), expected);
     }
 
     #[test]
     fn complex_display() {
-        let complex = Complex { real: 5.5, imag: -22.2 };
-        let expected = format!("{} + {}i", complex.real, complex.imag);
-        assert_eq!(format!("{}", complex), expected);
+        let n = Complex { real: 5.5, imag: -22.2 };
+        let expected = "5.5 + -22.2i";
+        assert_eq!(format!("{}", n), expected);
     }
 
     #[test]
     fn complex_debug() {
-        let complex = Complex { real: 5.5, imag: -22.2 };
-        let expected = format!("Complex {{ real: {}, imag: {} }}", complex.real, complex.imag);
-        assert_eq!(format!("{:?}", complex), expected);
+        let n = Complex { real: 5.5, imag: -22.2 };
+        let expected = "Complex { real: 5.5, imag: -22.2 }";
+        assert_eq!(format!("{:?}", n), expected);
     }
 
     #[test]
