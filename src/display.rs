@@ -1,12 +1,11 @@
-use std::fmt;
-use std::fmt::Formatter;
+use std::fmt::{Display, Formatter, Result};
 
 // TODO: Refactor to package
 #[derive(Debug)]
 pub struct MinMax(i64, i64);
 
-impl fmt::Display for MinMax {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for MinMax {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "({}, {})", self.0, self.1)
     }
 }
@@ -17,15 +16,34 @@ pub struct Complex {
     imag: f64
 }
 
-impl fmt::Display for Complex {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+impl Display for Complex {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, "{} + {}i", self.real, self.imag)
     }
 }
 
+struct List(Vec<i32>);
+
+impl Display for List {
+    fn fmt(&self, f: &mut Formatter) -> Result {
+        let vec = &self.0;
+
+        write!(f, "[")?;
+
+        for (count, v) in vec.iter().enumerate() {
+            // for every element except first, add a comma
+            if count != 0 { write!(f,", ")?; }
+            write!(f, "{}", v)?;
+        }
+
+        write!(f, "]")
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
-    use crate::display::{Complex, MinMax};
+    use super::*;
 
     #[test]
     fn minmax_display() {
@@ -57,5 +75,13 @@ mod tests {
         let expected = format!("Complex {{ real: {}, imag: {} }}", complex.real, complex.imag);
 
         assert_eq!(format!("{:?}", complex), expected);
+    }
+
+    #[test]
+    fn int_list_display() {
+        let v = List(vec![1, 2, 3, 4, 5]);
+        let expected = "[1, 2, 3, 4, 5]";
+
+        assert_eq!(format!("{}", v), expected)
     }
 }
